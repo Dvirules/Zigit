@@ -1,3 +1,3 @@
 cd Zigit-Frontend
+npm i
 npm start
-exit 0
