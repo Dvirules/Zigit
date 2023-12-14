@@ -1,0 +1,48 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5rem;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 16rem;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-input {
+    height: 1.5rem;
+    background-color:blanchedalmond;
+}
+
+.input-error {
+    color: red;
+}
+
+.login-submit {
+    border-radius: 5%;
+    height: 2rem;
+}
+
+.login-submit-valid {
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+
+.image {
+    background-image: url('/src/Media/cat.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 37rem;
+    height: 21rem;
+}

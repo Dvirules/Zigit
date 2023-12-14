@@ -1,0 +1,21 @@
+.details-card {
+    background-color: blanchedalmond;
+    padding: 2rem;
+    border-radius: 4rem;
+    border: 1px solid;
+}
+
+.avatar {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 2rem;
+    background-repeat: no-repeat;
+}
+
+.details-header {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 1.2rem;
+}
