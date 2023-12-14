@@ -15,7 +15,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<DbMock>(); // Listed a DB innstance to the app's services as a singleton.
+builder.Services.AddSingleton<DbMock>(); // Registered a DbMock innstance to the app's dependency injection container as a singleton service to query the DB.
+builder.Services.AddSingleton<Authentication>(); // Registered an Authentication innstance to the app's dependency injection container as a singleton service to
+                                                 // manage authentication across the app.
 
 var app = builder.Build();
 

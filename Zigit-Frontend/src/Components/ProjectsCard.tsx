@@ -8,7 +8,7 @@ interface ProjectsCardProps {
     token: string;
   }
 
-const req_url = "https://private-052d6-testapi4528.apiary-mock.com/info";
+const req_url = "https://localhost:7173/projects/getlist"; //Request to the backend url
 
 function ProjectsCard(props: ProjectsCardProps) {
     const [projectsList, setProjectsList] = useState<any[]>([]);
@@ -22,8 +22,8 @@ function ProjectsCard(props: ProjectsCardProps) {
             // In the last axios request I used .then, so now I wanted to demonstrate the usage of async/await too.
             const res = await axios.request({ headers: { Authorization: `Bearer ${props.token}` }, method: "GET", url: req_url });
             setProjectsList(res.data)
-        } catch (error) {
-            console.error("Error fetching projects:", error);
+        } catch (err) {
+            console.error("Error fetching projects: ", err);
         }
     }, []);
 

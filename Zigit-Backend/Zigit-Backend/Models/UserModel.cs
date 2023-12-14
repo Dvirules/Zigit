@@ -1,7 +1,8 @@
 ﻿namespace Zigit_Backend.Models
 {
-    public class User
+    public class UserModel
     {
+        public Guid? Token { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
 

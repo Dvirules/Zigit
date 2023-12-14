@@ -2,6 +2,7 @@
 {
     public class ProjectModel
     {
+        public string? BelongsTo { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
         public int Score { get; set; }
