@@ -22,4 +22,13 @@ table {
   tr:nth-child(even) {
     background-color: #f2f2f2;
   }
+
+  .sort {
+    background-image: url("/src/Media/sort.png");
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
   

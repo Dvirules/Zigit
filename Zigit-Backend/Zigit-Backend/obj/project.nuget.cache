@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VtnZX3mWBMUm9szjvqVVKF9OkKVmfePhHiejoDumrxMuMG2C07/BfswWzHL1+iZzKgndi9v4bag7+ACDBFW9Ww==",
+  "dgSpecHash": "TY89odHlxD/JJDA5A1hqaxoMYTgaPWBB6BYPmC+pG7Q7ajMAncR3sYj1sR+/P57/tY0Wj9oSLsATJx+cT3qTpw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Games.DESKTOP-PH52O9O\\Desktop\\ZigIt-Assignment\\Zigit-Backend\\Zigit-Backend\\Zigit-Backend.csproj",
+  "projectFilePath": "C:\\Users\\Games.DESKTOP-PH52O9O\\Documents\\Zigit\\Zigit-Backend\\Zigit-Backend\\Zigit-Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Games.DESKTOP-PH52O9O\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\Games.DESKTOP-PH52O9O\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

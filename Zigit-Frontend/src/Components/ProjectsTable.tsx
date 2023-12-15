@@ -1,16 +1,34 @@
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { useTable } from "react-table";
 import ProjectsTableCard from "./ProjectsTableCard";
 import "./Styles/ProjectsTable.css"
+import ReactDOM from "react-dom";
 
 interface ProjectsTableProps {
-  data: object[];
+  data: ProjectObject[];
 }
 
-// A component that renders and presents dynamically the data that is being passed to it (an array of objects) in the form of a table
+interface ProjectObject {
+  id: string;
+  name: string;
+  score: number;
+  durationInDays: number;
+  bugsCount: number;
+  madeDadeline: boolean;
+  email: string;
+}
+
+// A component that renders and presents dynamically the data that is being passed to it (an array of objects that have identical keys) in the form of a react-table
 function ProjectsTable(props: ProjectsTableProps) {
 
-  const columns: {Header: String|any; accessor: String|any}[] = useMemo(
+  const [data, setData] = useState<ProjectObject[]>(props.data);
+  const [columns, setColumns] = useState<{Header: String|any; accessor: String|any}[]>([]);
+
+  useEffect(() => {
+    setColumns(buildHeaders);
+  }, []);
+
+  const buildHeaders = useMemo( //Build the headers of the table from the object's keys
     () => {
       const headersArr = [];
       for (const [key, value] of Object.entries(props.data[0])) {
@@ -19,7 +37,33 @@ function ProjectsTable(props: ProjectsTableProps) {
       return headersArr;
     }, []);
 
-  const data = props.data
+  const handleFilter = (): void => {
+    const filterInputs = Array.prototype.slice.call(document.getElementsByClassName("filter"));
+    if(!noFiltersCheck(filterInputs)) {
+      let filteredData: ProjectObject[] = props.data;
+      filterInputs.forEach((element, index) => {
+        // Iterates over every key-vlaue pair inside every object in the data list and filters the object off the list if its value doesn't include one of the filters.
+        filteredData = filteredData.filter((projectObj: any) => projectObj[columns[index].Header].toString().toLowerCase().includes(element.value.toLowerCase()));
+       });
+      setData(filteredData);
+    }
+  }
+
+  const noFiltersCheck = (filterInputs: any[]): boolean => { // If there are no filters active, sets the data to it's initial state.
+   let hasNoFilter = true;
+   filterInputs.forEach(element => {
+    if(element.value !== "") {
+      hasNoFilter = false;
+    }
+   });
+   if(hasNoFilter)
+    setData(props.data);
+   return hasNoFilter;
+  }
+
+  const sort = (sortButtonNum: number) => {
+    console.log(sortButtonNum)
+  }
 
   const {
     getTableProps,
@@ -34,14 +78,17 @@ function ProjectsTable(props: ProjectsTableProps) {
 
   return (
     <div>
-      <ProjectsTableCard data={props.data} />
+      <ProjectsTableCard data={data} />
 
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              {headerGroup.headers.map((column, index) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}
+                <div className="sort" onClick={ () => sort(index) } />
+                <input className="filter" type="text" placeholder="Filter..." onChange={handleFilter} />
+                </th>
               ))}
             </tr>
           ))}
