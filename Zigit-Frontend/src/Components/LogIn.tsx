@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const req_url = "https://localhost:7173/users/ValidateUser";
 
-// A login function component reposnsible for user login against the server
+// A login function component responsible for user login against the server.
 function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

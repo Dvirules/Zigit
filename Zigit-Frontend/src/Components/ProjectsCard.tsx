@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import DetailsCard from "./DetailsCard";
-//import "./Styles/ProjectsCard.css"
 import axios from "axios";
 import ProjectsTable from "./ProjectsTable";
+import "./Styles/ProjectsCard.css";
 
 interface ProjectsCardProps {
     token: string;
@@ -10,6 +9,7 @@ interface ProjectsCardProps {
 
 const req_url = "https://localhost:7173/projects/getlist"; //Request to the backend url
 
+// A function component that sends an http request to the server for the rendering of the projects table component.
 function ProjectsCard(props: ProjectsCardProps) {
     const [projectsList, setProjectsList] = useState<any[]>([]);
 
@@ -43,7 +43,7 @@ function ProjectsCard(props: ProjectsCardProps) {
             </div>
         );
     }
-    else return (<div style={{ fontWeight: "bold", fontSize: "2rem" }}>Loading data from the server...</div>); // Still loading.
+    else return (<div className="loader">Loading data from the server...</div>); // Still loading.
 }
 
 export default ProjectsCard;

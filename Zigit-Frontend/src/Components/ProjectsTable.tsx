@@ -62,30 +62,32 @@ function ProjectsTable(props: ProjectsTableProps) {
     setData(filteredData);
   }
 
+  // This is a rather complicated function so I added many comments on it:
   const handleSort = (sortButtonNum: number) => {
-    handleSortDirection(sortButtonNum);
+    handleSortDirection(sortButtonNum); // Resets all sorting to none.
     const dataCopy: any[] = data;
     let sortedDataTargetKeyArr: any[] = [];
     let sortedData: ProjectObject[] = [];
-    const sortTargetHeader: any = columns[sortButtonNum].Header;
+    const sortTargetHeader: any = columns[sortButtonNum].Header; // The targeted header for sorting.
     const sampleProjectObj: any = props.data[0];
     const typeOfColumnData = typeof(sampleProjectObj[sortTargetHeader]);
 
-    dataCopy.forEach((projectObj: any) => {
+    dataCopy.forEach((projectObj: any) => { // Pushes into an array all the values of the targeted header to be sorted of all of the objects in the list.
       sortedDataTargetKeyArr.push(projectObj[sortTargetHeader]);
     });
 
-    if(typeOfColumnData === "number") {
+    if(typeOfColumnData === "number") { // If said values are numbers sorts them as numbers.
       sortedDataTargetKeyArr = sortedDataTargetKeyArr.map(value => parseInt(value));
       sortDirections[sortButtonNum] === ascending ? sortedDataTargetKeyArr = sortedDataTargetKeyArr.sort((a, b) => a - b) :
       sortedDataTargetKeyArr = sortedDataTargetKeyArr.sort((a, b) => b - a);
     }
-    else {
+    else { // Else sorts them as strings.
       sortDirections[sortButtonNum] === ascending ? sortedDataTargetKeyArr = sortedDataTargetKeyArr.sort() :
       sortedDataTargetKeyArr = sortedDataTargetKeyArr.sort().reverse();
     }
 
-    while(sortedDataTargetKeyArr.length > 0) {
+    while(sortedDataTargetKeyArr.length > 0) { // While there are still values in the sorted array, searches for the object with the current value,
+      // pushes it in order to the sorted objects array and removes it from the unordered one.
       for(let i = 0; i < dataCopy.length; i++) {
         if(dataCopy[i][sortTargetHeader] === sortedDataTargetKeyArr[0]) {
           sortedData.push(dataCopy[i]);
@@ -160,7 +162,7 @@ function ProjectsTable(props: ProjectsTableProps) {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
-                  return <td style={row.values.score > 90 ? {backgroundColor: "lightgreen"} : row.values.score < 70 ? {backgroundColor: "lightcoral"} : {backgroundColor: "white"}} {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  return <td className={row.values.score > 90 ? "row-green" : row.values.score < 70 ? "row-red" : "row-white"} {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                 })}
               </tr>
             );

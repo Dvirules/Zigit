@@ -3,6 +3,7 @@ interface DetailsCardProps {
     tokenValues: {token: string; personalDetails: {name: string; team: string; joinedAt: string; avatar: string}};
   }
 
+// A function component to render and present a user's details.
 function DetailsCard(props: DetailsCardProps) {
     
     return (

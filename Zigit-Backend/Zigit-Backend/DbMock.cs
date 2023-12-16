@@ -20,15 +20,15 @@ namespace Zigit_Backend
             new UserModel { 
                 Email = "example@gmail.com",
                 Password = "Bb123456",
-                Name = "Some Example",
+                Name = "A Tester",
                 Team = "Testers",
                 JoinedAt = "07-02-2015",
-                Avatar = "https://avatarfiles.alphacoders.com/164/thumb-164632.jpg"
+                Avatar = "https://static.thenounproject.com/png/2514435-200.png"
             },
             new UserModel {
                 Email = "admin@gmail.com",
                 Password = "Cc123456",
-                Name = "Some Admin",
+                Name = "An Admin",
                 Team = "Admins",
                 JoinedAt = "01-10-2018",
                 Avatar = "https://avatarfiles.alphacoders.com/164/thumb-164632.jpg"

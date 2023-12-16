@@ -1,0 +1,16 @@
+.table-card-container {
+    background-color: lightgray;
+    padding: 1rem;
+    border: 0.1rem solid;
+    text-align: center;
+}
+
+.data-title {
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.data {
+    font-size: 1.2rem;
+}

@@ -1,4 +1,4 @@
-//import "./Styles/info.css"
+import "./Styles/ProjectsTableCard.css"
 
 interface ProjectsTableCard {
     data: any[];
@@ -26,10 +26,11 @@ function ProjectsTableCard(props: ProjectsTableCard) {
     }
     
     return (
-        <div className="table-card-container" style={{backgroundColor: "lightgray", padding: "1rem", borderRadius: "1rem"}}>
-            <div className="data">
-                <p>{`Precentage of projects finished by deadline: ${calculateDeadLinePrecentage()}%`}</p>
-                <p>{`Total average score: ${calculateAverage()}`}</p>
+        <div className="table-card-container">
+            <div>
+                <p className="data-title">Table Data Statistics</p>
+                <p className="data">{`Precentage of projects finished by deadline: ${calculateDeadLinePrecentage()}%`}</p>
+                <p className="data">{`Total average score: ${calculateAverage()}`}</p>
             </div>
         </div>
     );

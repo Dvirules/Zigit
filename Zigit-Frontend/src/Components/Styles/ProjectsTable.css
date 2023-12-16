@@ -37,4 +37,16 @@ table {
     left: 2rem;
     top: 1.1rem;
   }
+
+  .row-red {
+    background-color: lightcoral;
+  }
+
+  .row-green {
+    background-color: lightgreen;
+  }
+
+  .row-white {
+    background-color: white;
+  }
   
