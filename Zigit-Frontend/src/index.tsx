@@ -4,6 +4,7 @@ import LogIn from './Components/LogIn';
 import Info from './Components/Info';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import "../src/General.css"
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

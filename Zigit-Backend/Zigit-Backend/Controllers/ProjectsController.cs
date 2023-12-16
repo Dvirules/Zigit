@@ -26,6 +26,10 @@ namespace Zigit_Backend.Controllers
                 return Unauthorized("Unauthorized");
             }
             UserModel user = _db.GetUserInAllowedListByToken(userToken);
+            if (user.Team == "Admins") // If user is an admin return all projects.
+            {
+                return Ok(_db.GetProjectsList());
+            }
             return Ok(_db.GetProjectsList().Where(project => project.BelongsTo == user.Email)); // Returns only the projects that are assigned to the specific user.
         }
     }

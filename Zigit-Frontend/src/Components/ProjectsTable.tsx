@@ -2,7 +2,6 @@ import React, {useEffect, useMemo, useState} from "react";
 import { useTable } from "react-table";
 import ProjectsTableCard from "./ProjectsTableCard";
 import "./Styles/ProjectsTable.css"
-import ReactDOM from "react-dom";
 
 interface ProjectsTableProps {
   data: ProjectObject[];
@@ -23,10 +22,25 @@ function ProjectsTable(props: ProjectsTableProps) {
 
   const [data, setData] = useState<ProjectObject[]>(props.data);
   const [columns, setColumns] = useState<{Header: String|any; accessor: String|any}[]>([]);
+  const [sortDirections, setSortDirections] = useState<string[]>([]);
+  const ascending = "Ascending Order";
+  const descending = "Descending Order";
+  const noOrder = "No Order";
 
   useEffect(() => {
     setColumns(buildHeaders);
   }, []);
+
+  useEffect(() => {
+    fillSortDirections();
+  }, [columns]);
+
+  const fillSortDirections = () => {
+    const numOfSortingButtons = document.getElementsByClassName("sort").length;
+    for(let i = 0; i < numOfSortingButtons; i++) {
+      sortDirections.push(noOrder);
+    }
+  }
 
   const buildHeaders = useMemo( //Build the headers of the table from the object's keys
     () => {
@@ -38,31 +52,77 @@ function ProjectsTable(props: ProjectsTableProps) {
     }, []);
 
   const handleFilter = (): void => {
+    resetSortDirections();
     const filterInputs = Array.prototype.slice.call(document.getElementsByClassName("filter"));
-    if(!noFiltersCheck(filterInputs)) {
-      let filteredData: ProjectObject[] = props.data;
-      filterInputs.forEach((element, index) => {
-        // Iterates over every key-vlaue pair inside every object in the data list and filters the object off the list if its value doesn't include one of the filters.
-        filteredData = filteredData.filter((projectObj: any) => projectObj[columns[index].Header].toString().toLowerCase().includes(element.value.toLowerCase()));
-       });
-      setData(filteredData);
+    let filteredData: ProjectObject[] = props.data;
+    filterInputs.forEach((element, index) => {
+      // Iterates over every key-vlaue pair inside every object in the data list and filters the object off the list if its value doesn't include one of the filters.
+      filteredData = filteredData.filter((projectObj: any) => projectObj[columns[index].Header].toString().toLowerCase().includes(element.value.toLowerCase()));
+      });
+    setData(filteredData);
+  }
+
+  const handleSort = (sortButtonNum: number) => {
+    handleSortDirection(sortButtonNum);
+    const dataCopy: any[] = data;
+    let sortedDataTargetKeyArr: any[] = [];
+    let sortedData: ProjectObject[] = [];
+    const sortTargetHeader: any = columns[sortButtonNum].Header;
+    const sampleProjectObj: any = props.data[0];
+    const typeOfColumnData = typeof(sampleProjectObj[sortTargetHeader]);
+
+    dataCopy.forEach((projectObj: any) => {
+      sortedDataTargetKeyArr.push(projectObj[sortTargetHeader]);
+    });
+
+    if(typeOfColumnData === "number") {
+      sortedDataTargetKeyArr = sortedDataTargetKeyArr.map(value => parseInt(value));
+      sortDirections[sortButtonNum] === ascending ? sortedDataTargetKeyArr = sortedDataTargetKeyArr.sort((a, b) => a - b) :
+      sortedDataTargetKeyArr = sortedDataTargetKeyArr.sort((a, b) => b - a);
+    }
+    else {
+      sortDirections[sortButtonNum] === ascending ? sortedDataTargetKeyArr = sortedDataTargetKeyArr.sort() :
+      sortedDataTargetKeyArr = sortedDataTargetKeyArr.sort().reverse();
+    }
+
+    while(sortedDataTargetKeyArr.length > 0) {
+      for(let i = 0; i < dataCopy.length; i++) {
+        if(dataCopy[i][sortTargetHeader] === sortedDataTargetKeyArr[0]) {
+          sortedData.push(dataCopy[i]);
+          dataCopy.splice(i, 1);
+          sortedDataTargetKeyArr.shift();
+          i = -1;
+        }
+      }
+    }
+    setData(sortedData);
+  }
+
+  const handleSortDirection = (index: number) => {
+    resetSortDirections(index);
+    if(sortDirections[index] === noOrder) {
+      sortDirections[index] = ascending;
+    }
+    else if(sortDirections[index] === ascending) {
+      sortDirections[index] = descending;
+    }
+    else {
+      sortDirections[index] = ascending;
     }
   }
 
-  const noFiltersCheck = (filterInputs: any[]): boolean => { // If there are no filters active, sets the data to it's initial state.
-   let hasNoFilter = true;
-   filterInputs.forEach(element => {
-    if(element.value !== "") {
-      hasNoFilter = false;
+  // If called without the index argument resets all the sorting directions, else resets all sorting directions except for the one in the index position.
+  const resetSortDirections = (index?: number) => {
+    for(let i = 0; i < sortDirections.length; i++) {
+      if(index !== null) {
+        if(i !== index) {
+          sortDirections[i] = noOrder;
+        }
+      }
+      else {
+        sortDirections[i] = noOrder;
+      }
     }
-   });
-   if(hasNoFilter)
-    setData(props.data);
-   return hasNoFilter;
-  }
-
-  const sort = (sortButtonNum: number) => {
-    console.log(sortButtonNum)
   }
 
   const {
@@ -86,7 +146,8 @@ function ProjectsTable(props: ProjectsTableProps) {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, index) => (
                 <th {...column.getHeaderProps()}>{column.render("Header")}
-                <div className="sort" onClick={ () => sort(index) } />
+                <div className="sort-direction">{sortDirections[index]}</div>
+                <div className="sort" onClick={ () => handleSort(index) } />
                 <input className="filter" type="text" placeholder="Filter..." onChange={handleFilter} />
                 </th>
               ))}
@@ -99,7 +160,7 @@ function ProjectsTable(props: ProjectsTableProps) {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
-                  return <td style={row.values.score > 90 ? {backgroundColor: "lightgreen"} : row.values.score < 70 ? {backgroundColor: "lightcoral"} : {}} {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  return <td style={row.values.score > 90 ? {backgroundColor: "lightgreen"} : row.values.score < 70 ? {backgroundColor: "lightcoral"} : {backgroundColor: "white"}} {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                 })}
               </tr>
             );
